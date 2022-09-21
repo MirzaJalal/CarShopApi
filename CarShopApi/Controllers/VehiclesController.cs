@@ -18,10 +18,20 @@ namespace CarShopApi.Controllers
 
         //GET: api/vehicles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Vehicle>>> GetAllVehicles([FromQuery]QueryParameters queryParameters)
+        public async Task<ActionResult<IEnumerable<Vehicle>>> GetAllVehicles([FromQuery]VehicleQueryParameters queryParameters)
         {
             IQueryable<Vehicle> vehicles = _context.Vehicles;
 
+            if(queryParameters.Min_Price != null)
+            {
+                vehicles = vehicles.Where(
+                    p => p.Price >= queryParameters.Min_Price.Value);
+            }
+            if (queryParameters.Max_Price != null)
+            {
+                vehicles = vehicles.Where(
+                    p => p.Price <= queryParameters.Max_Price.Value);
+            }
             vehicles = vehicles
                 .Skip(queryParameters.Size * (queryParameters.Page - 1))
                 .Take(queryParameters.Size);
