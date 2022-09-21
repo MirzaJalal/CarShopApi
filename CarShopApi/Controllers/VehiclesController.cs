@@ -18,11 +18,15 @@ namespace CarShopApi.Controllers
 
         //GET: api/vehicles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Vehicle>>> GetAllVehicles()
+        public async Task<ActionResult<IEnumerable<Vehicle>>> GetAllVehicles([FromQuery]QueryParameters queryParameters)
         {
-            var vehicles = await _context.Vehicles.ToListAsync();
+            IQueryable<Vehicle> vehicles = _context.Vehicles;
 
-            return Ok(vehicles);
+            vehicles = vehicles
+                .Skip(queryParameters.Size * (queryParameters.Page - 1))
+                .Take(queryParameters.Size);
+
+            return Ok(await vehicles.ToListAsync());
         }
 
         //GET: api/vehicles/id
