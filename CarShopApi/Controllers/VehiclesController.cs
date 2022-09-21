@@ -32,6 +32,14 @@ namespace CarShopApi.Controllers
                 vehicles = vehicles.Where(
                     p => p.Price <= queryParameters.Max_Price.Value);
             }
+            if (!string.IsNullOrEmpty(queryParameters.Name))
+            {
+                vehicles = vehicles.Where(v => v.Name == queryParameters.Name);
+            }
+            if (!string.IsNullOrEmpty(queryParameters.ModelSku))
+            {
+                vehicles = vehicles.Where(v => v.ModelSku == queryParameters.ModelSku);
+            }
             vehicles = vehicles
                 .Skip(queryParameters.Size * (queryParameters.Page - 1))
                 .Take(queryParameters.Size);
