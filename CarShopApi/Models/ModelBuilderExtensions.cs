@@ -15,7 +15,7 @@ namespace CarShopApi.API.Models
                 new Category { Id = 5, Name = "Convertible" });
 
             modelBuilder.Entity<Vehicle>().HasData(
-                new Vehicle { Id = 1, CategoryId = 1, Name = "BMW", ModelSku = "AWMGSJ", Price = 60008, IsAvailable = true },
+                new Vehicle { Id = 1, CategoryId = 1, Name = "BMW", ModelSku = "AWMGSJ", Price = 60008, IsAvailable = false },
                 new Vehicle { Id = 2, CategoryId = 1, Name = "Tesla", ModelSku = "AWMPS", Price = 42535, IsAvailable = true },
                 new Vehicle { Id = 3, CategoryId = 1, Name = "Audi", ModelSku = "AWMSGT", Price = 45364533, IsAvailable = true },
                 new Vehicle { Id = 4, CategoryId = 1, Name = "Mercedes", ModelSku = "AWMSJ", Price = 254125, IsAvailable = true },
