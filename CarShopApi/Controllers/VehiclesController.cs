@@ -7,7 +7,8 @@ namespace CarShopApi.Controllers
 {
     [ApiVersion("1.0")]
     //[Route("api/vehicles")]
-    [Route("v{v:apiVersion}/vehicles")]
+    //[Route("v{v:apiVersion}/vehicles")]
+    [Route("vehicles")]
     [ApiController]
     public class VehiclesV1Controller : ControllerBase
     {
@@ -139,7 +140,8 @@ namespace CarShopApi.Controllers
 
     [ApiVersion("2.0")]
     //[Route("api/vehicles")]
-    [Route("v{v:apiVersion}/vehicles")]
+    //[Route("v{v:apiVersion}/vehicles")]
+    [Route("vehicles")]
     [ApiController]
     public class VehiclesV2Controller : ControllerBase
     {
