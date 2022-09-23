@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<ul id="vehicle-lists"></ul>
+
+@section Scripts{
+    <script>
+        let url = "https://localhost:7046/vehicles";
+        let vehiclesList = document.getElementById("vehicle-lists");
+
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data =>showVehicles(data))
+        .catch(ex =>{
+            alert("Error!");
+            console.error(ex);
+        });
+
+        function showVehicles(vehicles){
+            vehicles.forEach(vehicle => {
+                let li = document.createElement("li");
+                let text = `${vehicle.name}(\$${vehicle.price})`;
+                li.appendChild(
+                    document.createTextNode(text));
+                vehiclesList.appendChild(li);
+            });
+        }
+    </script>
+}
