@@ -133,7 +133,7 @@ namespace CarShopApi.Controllers
                 return NotFound();
             }
             _context.Vehicles.Remove(vehicle);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return vehicle;
         } 
     }
@@ -267,7 +267,7 @@ namespace CarShopApi.Controllers
                 return NotFound();
             }
             _context.Vehicles.Remove(vehicle);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return vehicle;
         }
     }

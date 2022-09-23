@@ -1,4 +1,16 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using CarShopApi.Web.Data;
+using CarShopApi.Web.Areas.Identity.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("CarShopApiWebContextConnection") ?? throw new InvalidOperationException("Connection string 'CarShopApiWebContextConnection' not found.");
+
+builder.Services.AddDbContext<CarShopApiWebContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<CarShopApiWebUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<CarShopApiWebContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -17,6 +29,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
