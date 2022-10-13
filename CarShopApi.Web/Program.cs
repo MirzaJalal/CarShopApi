@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CarShopApi.Web.Data;
 using CarShopApi.Web.Areas.Identity.Data;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("CarShopApiWebContextConnection") ?? throw new InvalidOperationException("Connection string 'CarShopApiWebContextConnection' not found.");
@@ -14,6 +16,23 @@ builder.Services.AddDefaultIdentity<CarShopApiWebUser>(options => options.SignIn
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication()
+    .AddJwtBearer(options =>
+    {
+        var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes("qu!te $Ecretaaaaaaa"));
+        options.SaveToken = true;
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false,
+            ValidateIssuer = false,
+            IssuerSigningKey = key
+        };
+    });
 
 var app = builder.Build();
 
@@ -29,10 +48,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
 
+app.UseAuthentication();;
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();
